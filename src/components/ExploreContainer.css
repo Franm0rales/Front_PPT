@@ -13,10 +13,21 @@
   
   button {
     font-size: 1.2rem;
-    padding: 10px 20px;
+    padding: 8px !important;
+background: transparent;
+border: 1px solid blue !important;
+border-radius: 8px !important;
+
+   
     
   }
-  
+  .btn-jugar{
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: blue;
+    color:  whitesmoke;
+  }
   .resultado-container {
     margin-top: 20px;
   }

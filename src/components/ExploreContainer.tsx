@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { IonIcon } from "@ionic/react";
+import {document} from "ionicons/icons"
 import "./ExploreContainer.css";
 
 const elecciones = ["piedra", "papel", "tijeras"];
@@ -65,6 +67,7 @@ const Juego = () => {
           Tijeras
         </button>
       </div>
+
       <button className="btn-jugar" onClick={jugar}>Jugar</button>
       {eleccionOponente && (
         <div className="resultado-container">
