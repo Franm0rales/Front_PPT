@@ -1,13 +1,14 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import Juego from '../components/ExploreContainer';
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
 
 const Home: React.FC = () => {
   return (
-    <IonPage>
+    <><IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Blank</IonTitle>
+          <IonTitle>Piedra Papel Tijera</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
@@ -18,7 +19,7 @@ const Home: React.FC = () => {
         </IonHeader>
         <ExploreContainer />
       </IonContent>
-    </IonPage>
+    </IonPage><Juego /></>
   );
 };
 
