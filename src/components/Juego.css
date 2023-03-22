@@ -46,7 +46,7 @@
   cursor: pointer;
 }
 
-.boton-piedra:hover, .boton-papel:hover, .boton-tijera:hover {
+.boton-piedra:hover, .boton-papel:hover, .boton-tijera:hover{
   background-color: #bbb;
 }
 
@@ -80,4 +80,30 @@
  
   padding: 10px;
   text-align: center;
+}
+
+.oculto {
+  display: none;
+}
+
+.contador {
+ 
+  
+  font-size: 5rem;
+  font-weight: bold;
+  color: #a0e6a0;
+  text-shadow: 1px 1px 2px #000;
+}
+.contador.cero {
+  animation: zoomOut 0.5s;
+}
+
+@keyframes zoomOut {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(2);
+    opacity: 0;
+  }
 }
