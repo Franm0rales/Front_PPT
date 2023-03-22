@@ -13,6 +13,14 @@ const Juego = () => {
   const [resultado, setResultado] = useState("");
   const [iniciado, setIniciado] = useState(false);
   const [contador, setContador] = useState(3);
+  const [partidas, setPartidas] = useState([
+    {
+      nombreJugador: '',
+      eleccionJugador: '',
+      eleccionOponente: '',
+      resultado: ''
+    }
+  ]);
 
   const elegirNombreJugador = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNombreJugador(e.currentTarget.value);
@@ -42,6 +50,8 @@ const Juego = () => {
     });
   };
 
+  
+
   const jugar = () => {
     // Introducir el nombre y verificarlo junto a la eleccion
     if (!nombreJugador || !eleccionPendiente) {
@@ -64,7 +74,7 @@ const Juego = () => {
     setEleccionOponente(eleccionMaquina);
 
     // Resultado
-    let resultadoRonda;
+    let resultadoRonda: string;
     if (eleccionPendiente === eleccionMaquina) {
       resultadoRonda = "Empate";
     } else if (
@@ -77,13 +87,46 @@ const Juego = () => {
       resultadoRonda = "Perdiste";
     }
 
-    // Actualiza el estado y reinicia la eleccion
-    setResultado(
-      `${nombreJugador}, elegiste ${eleccionPendiente}. El oponente eligió ${eleccionMaquina}.${resultadoRonda}.`
-    );
-    setEleccionJugador(eleccionPendiente);
-    setEleccionPendiente("");
-  };
+
+    
+    //llamada a la api y Actualiza el estado y reinicia la eleccion
+
+    const data = {
+      nombreJugador: nombreJugador,
+      eleccionJugador: eleccionPendiente,
+      eleccionOponente: eleccionMaquina,
+      resultado: resultadoRonda,
+    };
+    
+    const apiUrl = 'http://localhost:3030/partidas';
+    
+    fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Error en la llamada Fetch');
+    })
+    .then(data => {
+      // Actualiza el estado y reinicia la eleccion
+      setResultado(
+        `${nombreJugador}, elegiste ${eleccionPendiente}. El oponente eligió ${eleccionMaquina}.${resultadoRonda}.`
+      );
+      setEleccionJugador(eleccionPendiente);
+      setEleccionPendiente("");
+    
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }    
   //Contador de 3 para conocer resultado
   useEffect(() => {
     if (contador === 0) {
@@ -97,6 +140,18 @@ const Juego = () => {
   
     return () => clearInterval(intervalId);
   }, [contador]);
+
+  //Llamada a la api para el historico
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetch('http://localhost:3030/historico')
+        .then(response => response.json())
+        .then(data => setPartidas(data));
+    }, 3000); // Realiza la solicitud cada 5 segundos
+  
+    return () => clearInterval(intervalId); // Limpia el intervalo al desmontar el componente
+  }, []);
+ 
 
   return (
     <div className="container">
@@ -139,7 +194,25 @@ const Juego = () => {
           </table>
         )}
       </div>
+     
+      
+      <div className="historico-container">
+      <h1>Historico 10 últimas partidas:</h1>
+      <ul className="historico-list">
+        {partidas.map(partida => (
+          <li className="historico-item" >
+            <div className="historico-item-header">
+              <div><b>Jugador:</b> {partida.nombreJugador}</div>
+              <div><b>Elección jugador:</b> {partida.eleccionJugador}</div>
+              <div><b>Elección oponente:</b> {partida.eleccionOponente}</div>
+              <div><b>Resultado:</b> {partida.resultado}</div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
+    </div>
+   
   );
   
   
