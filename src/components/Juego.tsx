@@ -147,7 +147,7 @@ const Juego = () => {
       fetch('http://localhost:3030/historico')
         .then(response => response.json())
         .then(data => setPartidas(data));
-    }, 3000); // Realiza la solicitud cada 5 segundos
+    }, 5000); // Realiza la solicitud cada 5 segundos
   
     return () => clearInterval(intervalId); // Limpia el intervalo al desmontar el componente
   }, []);
