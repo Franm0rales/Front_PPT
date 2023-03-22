@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IonIcon } from "@ionic/react";
 import {document} from "ionicons/icons"
-import "./ExploreContainer.css";
+import "./Juego.css";
 
 const elecciones = ["piedra", "papel", "tijeras"];
 
